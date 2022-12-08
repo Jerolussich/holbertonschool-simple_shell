@@ -14,7 +14,7 @@ extern char **environ;
 
 /* Functions prototypes*/
 
-int main(int ac, char **av);
+int main();
 char *get_env(char *name);
 char *find_path(char *str, char *input);
 char *attach_path(char *str, char **input);

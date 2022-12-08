@@ -2,11 +2,9 @@
 
 /**
  * main - shell
- * @ac: argument count
- * @av: argument vector
  * Return: return -1 if failed or command output
  */
-int main(int ac, char **av)
+int main()
 {
 	size_t ptr = 0;
 	int bytes_read, success;
