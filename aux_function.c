@@ -84,30 +84,37 @@ char *_strcpy(char *dest, char *src)
 
 char *_strdup(char *str)
 {
-	char *res = NULL;
-	int i = 0;
+	int i, j;
+	char *array;
 
-	if (str != NULL)
-		res = malloc(_strlen(str) + 1);
-	if (res != NULL)
+	if (str == NULL)
+		return (NULL);
+
+	for (i = 0 ; str[i] != '\0' ; i++)
 	{
-		for (i = 0; i <= _strlen(str); i++)
-			res[i] = str[i];
 	}
-	return (res);
+
+	array = malloc(sizeof(char) * i + 1);
+
+	if (array == NULL)
+		return (NULL);
+
+	for (j = 0 ; j <= i ; j++)
+		array[j] = str[j];
+
+	return (array);
 }
 
 /**
  * free_grid - Frees a 2 dimensional grid
  * @grid: Grid to be freed
- * @height: Height of the grid
 */
 
 void free_grid(char **grid)
 {
-	int height= 0, i;
+	int height = 0, i;
 
-	if(!grid)
+	if (!grid)
 		return;
 
 	for (i = 0; grid[i]; i++)

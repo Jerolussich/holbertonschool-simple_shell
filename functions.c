@@ -1,3 +1,4 @@
+#include "main.h"
 /**
  * get_env - search env por specific line
  * @name: word to look for in env
@@ -5,17 +6,15 @@
  */
 char *get_env(char *name)
 {
-	size_t buffsize = 1024;
 	int i;
 	char *token = NULL, *token_cpy = NULL, *buff = NULL;
 
 	if (!environ)
 		return (NULL);
 	for (i = 0; environ[i]; i++)
-	{	
+	{
 		buff = strdup(environ[i]);
 		token = strtok(buff, "=");
-
 		if (strcmp(token, name) == 0)
 		{
 			token = strtok(NULL, "=");
@@ -29,55 +28,108 @@ char *get_env(char *name)
 		}
 		free(buff);
 	}
+	return (0);
 }
 /**
- * attach_path - add corresponding path to command given
- * @str: string given with path
- * @input:input given in shell
+ * attach_path  - add corresponding path to the given command
+ * @token_array: input given in shell
+ * @buffer: string given by path
  * Return: string with full path or NULL if failed
  */
-
-char *attach_path(char *str, char **input)
+char *attach_path(char *buffer, char **token_array)
 {
 	struct stat st;
 	size_t buffsize = 1024;
-	int i;
 	char *full_path = NULL, *token = NULL, *str_cpy;
 
-	str_cpy = strdup(str);
+	str_cpy = strdup(buffer);
 	token = strtok(str_cpy, ":");
 	while (token)
 	{
 		full_path = malloc(buffsize);
 		strcpy(full_path, token);
 		strcat(full_path, "/");
-		strcat(full_path, input[0]);
+		strcat(full_path, token_array[0]);
 		if (stat(full_path, &st) == 0)
 		{
-			free(input[0]);
+			free(token_array[0]);
 			free(str_cpy);
-			return(full_path);
+			return (full_path);
 		}
 		free(full_path);
 		token = strtok(NULL, ":");
 	}
 	free(str_cpy);
-	return (input[0]);
+	return (token_array[0]);
 }
-void exit_shell(*input)
+/**
+ * shell_exit - exits the shell parent process
+ * @token_array: input given in shell
+ * @buffer: string given by path
+ */
+void shell_exit(char **token_array, char *buffer)
 {
-	if (strcmp(token_array[0], "exit") == 0)
-	{
 		free(buffer);
 		free_grid(token_array);
 		exit(0);
-	}
 }
-int fork_error_handle(fk)
+/**
+ * fork_handler - creates a child proccess and executes a program
+ * @token_array: input given in shell
+ * @buffer: string given by path
+ * Return: 0 if command executed successfully, exit if fork fails
+ */
+int fork_handler(char **token_array, char *buffer)
 {
-	free(buffer);
-	free_grid(token_array);
-	perror("Error: ");
+	int fk;
+
+	fk =  fork();
+	if (fk < 0)
+	{
+		free(buffer);
+		free_grid(token_array);
+		perror("Error: ");
+		exit(0);
+	}
+	if (fk == 0) /* child process */
+		execve(token_array[0], token_array, environ);
+	else /* parent process */
+	{
+		wait(NULL);
+		free_grid(token_array);
+		return (0);
+	}
 	return (0);
 }
+/**
+ * execute - checks if the first argument by the user can be executed
+ * @token_array: input given in shell
+ * @buffer: string given by path
+ * Return: string with full path or NULL if failed
+ */
+int execute(char **token_array, char *buffer)
+{
+	struct stat st;
+	int check;
+	char *path;
 
+	check = stat(token_array[0], &st);
+	if (check == 0) /* if given full path */
+		fork_handler(token_array, buffer);
+	else if (check == -1) /* if not given full path */
+	{
+		path = get_env("PATH");
+		token_array[0] = attach_path(path, token_array);
+		free(path);
+		check = stat(token_array[0], &st);
+		if (check == 0)
+			fork_handler(token_array, buffer);
+		if (check == -1)
+		{
+			printf("Command not found\n");
+			free_grid(token_array);
+			return (-1);
+		}
+	}
+	return (0);
+}

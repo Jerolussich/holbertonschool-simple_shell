@@ -1,18 +1,21 @@
-
-
-
-void tokenisation(buffer)
+#include "main.h"
+/**
+ * tokenize_buffer - tokenizes arguments given by the user
+ * @buffer: string containing the arguments
+ * Return: array of strings containing each argument
+ */
+char **tokenize_buffer(char *buffer)
 {
 	size_t buffsize = 1024;
 	int i;
-	char *token = NULL, *b = NULL , **token_array = NULL;
+	char *token = NULL, *b = NULL, **token_array = NULL;
 
 	token_array = malloc(buffsize);
 	if (!token_array)
 	{
 		free(buffer);
-		perror("Error: ");
-		return (-1);
+		perror("Malloc error: ");
+		exit(0);
 	}
 	b = strdup(buffer);
 	token = strtok(b, " \t\n");
@@ -23,10 +26,5 @@ void tokenisation(buffer)
 	}
 	token_array[i] = NULL;
 	free(b);
-
-	if (!token_array[0]) // if token_array[0] is made of tokens
-		{
-			free_grid(token_array);
-			continue;
-		}
+	return (token_array);
 }
