@@ -13,14 +13,14 @@ char *get_env(char *name)
 		return (NULL);
 	for (i = 0; environ[i]; i++)
 	{
-		buff = strdup(environ[i]);
+		buff = _strdup(environ[i]);
 		token = strtok(buff, "=");
-		if (strcmp(token, name) == 0)
+		if (_strcmp(token, name) == 0)
 		{
 			token = strtok(NULL, "=");
 			if (token)
 			{
-				token_cpy = strdup(token);
+				token_cpy = _strdup(token);
 				free(buff);
 				return (token_cpy);
 			}
@@ -42,14 +42,14 @@ char *attach_path(char *buffer, char **token_array)
 	size_t buffsize = 1024;
 	char *full_path = NULL, *token = NULL, *str_cpy;
 
-	str_cpy = strdup(buffer);
+	str_cpy = _strdup(buffer);
 	token = strtok(str_cpy, ":");
 	while (token)
 	{
 		full_path = malloc(buffsize);
-		strcpy(full_path, token);
-		strcat(full_path, "/");
-		strcat(full_path, token_array[0]);
+		_strcpy(full_path, token);
+		_strcat(full_path, "/");
+		_strcat(full_path, token_array[0]);
 		if (stat(full_path, &st) == 0)
 		{
 			free(token_array[0]);
