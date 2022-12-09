@@ -22,6 +22,7 @@ char **tokenize_buffer(char *buffer);
 void shell_exit(char **token_array, char *buffer);
 int fork_error_handler(char **token_array, char *buffer);
 int execute(char **token_array, char *buffer);
+void print_env();
 
 /* Auxiliar functions prototypes*/
 
