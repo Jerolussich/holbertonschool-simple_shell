@@ -25,9 +25,11 @@ int main()
 			free_grid(token_array);
 			continue;
 		}
+		if (_strcmp(token_array[0], "env") == 0) /*  print env command*/
+			print_env();
 		if (_strcmp(token_array[0], "exit") == 0) /* exit command */
 			shell_exit(token_array, buffer);
-		/* Ssearches for a valid path, if one is found it is executed  */
+		/* searches for a valid path, if one is found it is executed  */
 		success = execute(token_array, buffer);
 		if (success == -1)  /* if command not found*/
 		{
