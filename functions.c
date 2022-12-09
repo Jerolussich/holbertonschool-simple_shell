@@ -107,7 +107,7 @@ int fork_handler(char **token_array, char *buffer)
  * @buffer: string given by path
  * Return: string with full path or NULL if failed
  */
-int execute(char **token_array, char *buffer)
+int execute(char **token_array, char *buffer, int count)
 {
 	struct stat st;
 	int check;
@@ -126,7 +126,8 @@ int execute(char **token_array, char *buffer)
 			fork_handler(token_array, buffer);
 		if (check == -1)
 		{
-			printf("Command not found\n");
+			_printf("hsh: %i: %s: ", count, token_array[0]);
+			perror("");
 			free_grid(token_array);
 			return (-1);
 		}
