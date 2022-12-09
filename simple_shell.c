@@ -4,7 +4,7 @@
  * main - shell
  * Return: return -1 if failed or command output
  */
-int main()
+int main(void)
 {
 	size_t ptr = 0;
 	int bytes_read, success;

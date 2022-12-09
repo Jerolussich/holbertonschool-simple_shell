@@ -5,7 +5,7 @@
  */
 
 
-void print_env()
+void print_env(void)
 {
 	int i;
 	char *buff = NULL;

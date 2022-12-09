@@ -6,22 +6,32 @@
  */
 char **tokenize_buffer(char *buffer)
 {
-	size_t buffsize = 1024;
-	int i;
+	int i, j = 0, counter = 0;
 	char *token = NULL, *b = NULL, **token_array = NULL;
 
-	token_array = malloc(buffsize);
+	while (buffer[j])
+	{
+		if (buffer[j] == 9 || buffer[j] == 10 || buffer[j] == 32)
+		{
+			j++;
+			counter++;
+			continue;
+		}
+		j++;
+	}
+
+	token_array = malloc(sizeof(char *) * (counter + 1));
 	if (!token_array)
 	{
 		free(buffer);
 		perror("Malloc error: ");
 		exit(0);
 	}
-	b = strdup(buffer);
+	b = _strdup(buffer);
 	token = strtok(b, " \t\n");
 	for (i = 0; token; i++)
 	{
-		token_array[i] = strdup(token);
+		token_array[i] = _strdup(token);
 		token = strtok(NULL, " \t\n");
 	}
 	token_array[i] = NULL;
