@@ -15,7 +15,7 @@ extern char **environ;
 
 /* Functions prototypes*/
 
-int main(int ac, char **av);
+int main();
 char *get_env(char *name);
 char *find_path(char *str, char *input);
 char *attach_path(char *str, char **input);
@@ -23,6 +23,7 @@ char **tokenize_buffer(char *buffer);
 void shell_exit(char **token_array, char *buffer);
 int fork_error_handler(char **token_array, char *buffer);
 int execute(char **token_array, char *buffer);
+void print_env();
 
 /* Auxiliar functions prototypes*/
 
