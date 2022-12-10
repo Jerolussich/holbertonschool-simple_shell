@@ -28,10 +28,10 @@ int main(void)
 		if (_strcmp(token_array[0], "env") == 0) /*  print env command*/
 		{
 			print_env();
-			free_grid(token_array);
 			continue;
 		}
-		if (_strcmp(token_array[0], "exit") == 0) /* exit command */
+		/* exit command */
+		if (_strcmp(token_array[0], "exit") == 0 && !token_array[1])
 			shell_exit(token_array, buffer);
 		/* searches for a valid path, if one is found it is executed  */
 		execute(token_array, buffer, count);
