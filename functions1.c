@@ -1,6 +1,6 @@
 #include "main.h"
 
-/*
+/**
  * print_env - print enviroment
  */
 
@@ -19,5 +19,4 @@ void print_env(void)
 		printf("%s\n", buff);
 	}
 	free(buff);
-	return;
 }

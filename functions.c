@@ -105,6 +105,7 @@ int fork_handler(char **token_array, char *buffer)
  * execute - checks if the first argument by the user can be executed
  * @token_array: input given in shell
  * @buffer: string given by path
+ * @count: counter of commands sent to shell
  * Return: string with full path or NULL if failed
  */
 int execute(char **token_array, char *buffer, int count)
