@@ -7,7 +7,7 @@
 int main(void)
 {
 	size_t ptr = 0;
-	int bytes_read, success, count = 0;
+	int bytes_read,count = 0;
 	char *buffer = NULL, **token_array = NULL;
 
 	while (1)
@@ -33,10 +33,6 @@ int main(void)
 		if (_strcmp(token_array[0], "exit") == 0) /* exit command */
 			shell_exit(token_array, buffer);
 		/* searches for a valid path, if one is found it is executed  */
-		success = execute(token_array, buffer, count);
-		if (success == -1)  /* if command not found*/
-		{
-			continue;
-		}
+		execute(token_array, buffer, count);
 	}
 }
