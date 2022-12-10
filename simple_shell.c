@@ -7,7 +7,7 @@
 int main(void)
 {
 	size_t ptr = 0;
-	int bytes_read, count = 0;
+	int bytes_read, count = 0, status = 0;
 	char *buffer = NULL, **token_array = NULL;
 
 	while (1)
@@ -25,15 +25,16 @@ int main(void)
 			free_grid(token_array);
 			continue;
 		}
-		if (_strcmp(token_array[0], "env") == 0) /*  print env command*/
+			/* printenv command*/
+		if (_strcmp(token_array[0], "env") == 0 && !token_array[1])
 		{
 			print_env();
 			continue;
 		}
-		/* exit command */
+			/* exit command */
 		if (_strcmp(token_array[0], "exit") == 0 && !token_array[1])
-			shell_exit(token_array, buffer);
+			shell_exit(token_array, buffer, status);
 		/* searches for a valid path, if one is found it is executed  */
-		execute(token_array, buffer, count);
+		status = execute(token_array, buffer, count, status);
 	}
 }

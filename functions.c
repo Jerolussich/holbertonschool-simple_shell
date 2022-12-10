@@ -66,11 +66,14 @@ char *attach_path(char *buffer, char **token_array)
  * shell_exit - exits the shell parent process
  * @token_array: input given in shell
  * @buffer: string given by path
+ * @status: exit status
  */
-void shell_exit(char **token_array, char *buffer)
+void shell_exit(char **token_array, char *buffer, int status)
 {
 		free(buffer);
 		free_grid(token_array);
+		if (status != 0)
+			exit(status);
 		exit(EXIT_SUCCESS);
 }
 /**
@@ -106,9 +109,10 @@ int fork_handler(char **token_array, char *buffer)
  * @token_array: input given in shell
  * @buffer: string given by path
  * @count: counter of commands sent to shell
+ * @status: exit status
  * Return: string with full path or NULL if failed
  */
-int execute(char **token_array, char *buffer, int count)
+int execute(char **token_array, char *buffer, int count, int status)
 {
 	struct stat st;
 	int check;
@@ -130,7 +134,8 @@ int execute(char **token_array, char *buffer, int count)
 			_printf("hsh: %i: %s: ", count, token_array[0]);
 			perror("");
 			free_grid(token_array);
-			return (-1);
+			status = 127;
+			return (status);
 		}
 	}
 	return (0);
