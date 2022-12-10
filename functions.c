@@ -71,7 +71,7 @@ void shell_exit(char **token_array, char *buffer)
 {
 		free(buffer);
 		free_grid(token_array);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 }
 /**
  * fork_handler - creates a child proccess and executes a program
@@ -89,7 +89,7 @@ int fork_handler(char **token_array, char *buffer)
 		free(buffer);
 		free_grid(token_array);
 		perror("Error: ");
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 	if (fk == 0) /* child process */
 		execve(token_array[0], token_array, environ);
