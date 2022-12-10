@@ -7,7 +7,7 @@
 int main(void)
 {
 	size_t ptr = 0;
-	int bytes_read,count = 0;
+	int bytes_read, count = 0;
 	char *buffer = NULL, **token_array = NULL;
 
 	while (1)
