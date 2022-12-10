@@ -8,15 +8,12 @@
 void print_env(void)
 {
 	int i;
-	char *buff = NULL;
 
 	if (!environ)
 		return;
 
 	for (i = 0; environ[i]; i++)
 	{
-		buff = strdup(environ[i]);
-		printf("%s\n", buff);
+		printf("%s\n", environ[i]);
 	}
-	free(buff);
 }

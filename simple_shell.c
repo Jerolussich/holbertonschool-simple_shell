@@ -28,6 +28,7 @@ int main(void)
 		if (_strcmp(token_array[0], "env") == 0) /*  print env command*/
 		{
 			print_env();
+			free_grid(token_array);
 			continue;
 		}
 		if (_strcmp(token_array[0], "exit") == 0) /* exit command */
