@@ -20,9 +20,9 @@ char *get_env(char *name);
 char *find_path(char *str, char *input);
 char *attach_path(char *str, char **input);
 char **tokenize_buffer(char *buffer);
-void shell_exit(char **token_array, char *buffer, int status);
+void shell_exit(char **token_array, char *buffer);
 int fork_error_handler(char **token_array, char *buffer);
-int execute(char **token_array, char *buffer, int count, int status);
+int execute(char **token_array, char *buffer, int count);
 void print_env(void);
 
 /* Auxiliar functions prototypes*/

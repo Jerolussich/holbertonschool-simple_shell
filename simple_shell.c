@@ -7,7 +7,7 @@
 int main(void)
 {
 	size_t ptr = 0;
-	int bytes_read, count = 0, status = 0;
+	int bytes_read, count = 0;
 	char *buffer = NULL, **token_array = NULL;
 
 	while (1)
@@ -34,8 +34,8 @@ int main(void)
 		}
 			/* exit command */
 		if (_strcmp(token_array[0], "exit") == 0 && !token_array[1])
-			shell_exit(token_array, buffer, status);
+			shell_exit(token_array, buffer);
 		/* searches for a valid path, if one is found it is executed  */
-		status = execute(token_array, buffer, count, status);
+		execute(token_array, buffer, count);
 	}
 }
