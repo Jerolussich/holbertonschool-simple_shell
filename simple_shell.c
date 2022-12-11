@@ -17,7 +17,7 @@ int main(void)
 		if (bytes_read == -1) /* ctrl+d handler */
 		{
 			free(buffer);
-			exit(EXIT_FAILURE);
+			exit(0);
 		}
 		token_array = tokenize_buffer(buffer);
 		if (!token_array[0]) /* if first argument is " " before tokenized */
@@ -26,7 +26,7 @@ int main(void)
 			continue;
 		}
 			/* printenv command*/
-		if (_strcmp(token_array[0], "env") == 0)
+		if (_strcmp(token_array[0], "env") == 0 && !token_array[1])
 		{
 			print_env();
 			free_grid(token_array);
