@@ -26,7 +26,7 @@ int main(void)
 			continue;
 		}
 			/* printenv command*/
-		if (_strcmp(token_array[0], "env") == 0 && !token_array[1])
+		if (_strcmp(token_array[0], "env") == 0)
 		{
 			print_env();
 			free_grid(token_array);
