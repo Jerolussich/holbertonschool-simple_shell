@@ -32,5 +32,6 @@ int _strcmp(char *s1, char *s2);
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
 void free_grid(char **grid);
+char *_strstr(char *haystack, char *needle);
 
 #endif

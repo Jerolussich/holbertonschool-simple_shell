@@ -15,7 +15,7 @@ char *get_env(char *name)
 	{
 		buff = _strdup(environ[i]);
 		token = strtok(buff, "=");
-		if (_strcmp(token, name) == 0)
+		if (_strstr(token, name) == 0)
 		{
 			token = strtok(NULL, "=");
 			if (token)
@@ -125,7 +125,7 @@ int execute(char **token_array, char *buffer, int count, int status)
 		path = get_env("PATH");
 		if (path == NULL)
 		{
-			fprintf(stderr, "hsh: %i: %s: not found\n", count, token_array[0]);
+			fprintf(stderr, "./hsh: %i: %s: not found\n", count, token_array[0]);
 			status = 127;
 			shell_exit(token_array, buffer, status);
 		}
@@ -136,7 +136,7 @@ int execute(char **token_array, char *buffer, int count, int status)
 			fork_handler(token_array, buffer, status);
 		if (check == -1) /* if command not found */
 		{
-			fprintf(stderr, "hsh: %i: %s: not found\n", count, token_array[0]);
+			fprintf(stderr, "./hsh: %i: %s: not found\n", count, token_array[0]);
 			free_grid(token_array);
 			status = 127;
 			return (status);
