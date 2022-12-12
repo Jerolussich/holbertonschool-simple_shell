@@ -21,7 +21,7 @@ char *find_path(char *str, char *input);
 char *attach_path(char *str, char **input);
 char **tokenize_buffer(char *buffer);
 void shell_exit(char **token_array, char *buffer, int status);
-int fork_handler(char **token_array, char *buffer);
+int fork_handler(char **token_array, char *buffer, int status);
 int execute(char **token_array, char *buffer, int count, int status);
 void print_env(void);
 
