@@ -74,7 +74,7 @@ void shell_exit(char **token_array, char *buffer, int status)
 		free_grid(token_array);
 		if (status != 0)
 			exit(status);
-		exit(EXIT_SUCCESS);
+		exit(0);
 }
 /**
  * fork_handler - creates a child proccess and executes a program
@@ -92,7 +92,7 @@ int fork_handler(char **token_array, char *buffer)
 		free(buffer);
 		free_grid(token_array);
 		perror("Error: ");
-		exit(EXIT_FAILURE);
+		exit(0);
 	}
 	if (fk == 0) /* child process */
 		execve(token_array[0], token_array, environ);
@@ -131,8 +131,7 @@ int execute(char **token_array, char *buffer, int count, int status)
 			fork_handler(token_array, buffer);
 		if (check == -1)
 		{
-			_printf("hsh: %i: %s: ", count, token_array[0]);
-			perror("");
+			fprintf(stderr,"hsh: %i: %s: not found\n", count, token_array[0]);
 			free_grid(token_array);
 			status = 127;
 			return (status);

@@ -17,7 +17,7 @@ int main(void)
 		if (bytes_read == -1) /* ctrl+d handler */
 		{
 			free(buffer);
-			exit(EXIT_FAILURE);
+			exit(status);
 		}
 		token_array = tokenize_buffer(buffer);
 		if (!token_array[0]) /* if first argument is " " before tokenized */
