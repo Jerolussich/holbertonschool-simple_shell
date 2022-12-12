@@ -72,7 +72,7 @@ void shell_exit(char **token_array, char *buffer, int status)
 {
 	free(buffer);
 	free_grid(token_array);
-	exit(WEXITSTATUS(status));
+	exit(status);
 }
 /**
  * fork_handler - creates a child proccess and executes a program
@@ -99,7 +99,7 @@ int fork_handler(char **token_array, char *buffer, int status)
 		wait(&status);
 		free_grid(token_array);
 	}
-	return (status);
+	return (WEXITSTATUS(status));
 }
 /**
  * execute - checks if the first argument by the user can be executed
@@ -121,18 +121,12 @@ int execute(char **token_array, char *buffer, int count, int status)
 	else if (check == -1) /* if not given full path */
 	{
 		path = get_env("PATH");
-		if (path == NULL)
-		{
-			fprintf(stderr, "./hsh: %i: %s: not found\n", count, token_array[0]);
-			status = 127;
-			shell_exit(token_array, buffer, status);
-		}
 		token_array[0] = attach_path(path, token_array);
 		free(path);
 		check = stat(token_array[0], &st);
 		if (check == 0)
 			status = fork_handler(token_array, buffer, status);
-		if (check == -1) /* if command not found */
+		if (check == -1 || path == NULL) /* if command not found */
 		{
 			fprintf(stderr, "./hsh: %i: %s: not found\n", count, token_array[0]);
 			free_grid(token_array);
