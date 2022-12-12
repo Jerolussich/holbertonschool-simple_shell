@@ -98,10 +98,10 @@ int fork_handler(char **token_array, char *buffer)
 		execve(token_array[0], token_array, environ);
 	else /* parent process */
 	{
-		wait(&status);
+		wait(NULL);
 		free_grid(token_array);
 	}
-	return (status);
+	return (0);
 }
 /**
  * execute - checks if the first argument by the user can be executed
@@ -119,7 +119,7 @@ int execute(char **token_array, char *buffer, int count, int status)
 
 	check = stat(token_array[0], &st);
 	if (check == 0) /* if given full path */
-		fork_handler(token_array, buffer, status);
+		fork_handler(token_array, buffer);
 	else if (check == -1) /* if not given full path */
 	{
 		path = get_env("PATH");
@@ -133,7 +133,7 @@ int execute(char **token_array, char *buffer, int count, int status)
 		free(path);
 		check = stat(token_array[0], &st);
 		if (check == 0)
-			fork_handler(token_array, buffer, status);
+			fork_handler(token_array, buffer);
 		if (check == -1) /* if command not found */
 		{
 			fprintf(stderr, "./hsh: %i: %s: not found\n", count, token_array[0]);
