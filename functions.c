@@ -15,7 +15,7 @@ char *get_env(char *name)
 	{
 		buff = _strdup(environ[i]);
 		token = strtok(buff, "=");
-		if (_strstr(token, name) != NULL)
+		if (_strcmp(token, name) == 0)
 		{
 			token = strtok(NULL, "=");
 			if (token)
