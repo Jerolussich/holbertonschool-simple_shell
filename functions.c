@@ -74,7 +74,7 @@ void shell_exit(char **token_array, char *buffer, int status)
 		free_grid(token_array);
 		if (status != 0)
 			exit(status);
-		exit(WEXITSTATUS(status));
+		exit(0);
 }
 /**
  * fork_handler - creates a child proccess and executes a program
@@ -82,7 +82,7 @@ void shell_exit(char **token_array, char *buffer, int status)
  * @buffer: string given by path
  * Return: 0 if command executed successfully, exit if fork fails
  */
-int fork_handler(char **token_array, char *buffer, int status)
+int fork_handler(char **token_array, char *buffer)
 {
 	int fk;
 
