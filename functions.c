@@ -28,7 +28,7 @@ char *get_env(char *name)
 		}
 		free(buff);
 	}
-	return (0);
+	return (NULL);
 }
 /**
  * attach_path  - add corresponding path to the given command
@@ -74,7 +74,7 @@ void shell_exit(char **token_array, char *buffer, int status)
 		free_grid(token_array);
 		if (status != 0)
 			exit(status);
-		exit(0);
+		exit(WEXITSTATUS(status));
 }
 /**
  * fork_handler - creates a child proccess and executes a program
@@ -82,7 +82,7 @@ void shell_exit(char **token_array, char *buffer, int status)
  * @buffer: string given by path
  * Return: 0 if command executed successfully, exit if fork fails
  */
-int fork_handler(char **token_array, char *buffer)
+int fork_handler(char **token_array, char *buffer, int status)
 {
 	int fk;
 
@@ -98,11 +98,10 @@ int fork_handler(char **token_array, char *buffer)
 		execve(token_array[0], token_array, environ);
 	else /* parent process */
 	{
-		wait(NULL);
+		wait(&status);
 		free_grid(token_array);
-		return (0);
 	}
-	return (0);
+	return (status);
 }
 /**
  * execute - checks if the first argument by the user can be executed
@@ -120,16 +119,22 @@ int execute(char **token_array, char *buffer, int count, int status)
 
 	check = stat(token_array[0], &st);
 	if (check == 0) /* if given full path */
-		fork_handler(token_array, buffer);
+		fork_handler(token_array, buffer, status);
 	else if (check == -1) /* if not given full path */
 	{
 		path = get_env("PATH");
+		if (path == NULL)
+		{
+			fprintf(stderr, "hsh: %i: %s: not found\n", count, token_array[0]);
+			status = 127;
+			shell_exit(token_array, buffer, status);
+		}
 		token_array[0] = attach_path(path, token_array);
 		free(path);
 		check = stat(token_array[0], &st);
 		if (check == 0)
-			fork_handler(token_array, buffer);
-		if (check == -1)
+			fork_handler(token_array, buffer, status);
+		if (check == -1) /* if command not found */
 		{
 			fprintf(stderr, "hsh: %i: %s: not found\n", count, token_array[0]);
 			free_grid(token_array);
