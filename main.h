@@ -33,27 +33,4 @@ char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
 void free_grid(char **grid);
 
-/* Printf function protoypes */
-
-int _printf(const char *format, ...);
-int _putchar(char c);
-int get_printf_func(va_list args, char spec);
-int print_c(va_list args);
-int print_p(va_list args);
-int print_s(va_list args);
-int print_num(va_list args);
-void _print(long int n);
-
-/**
- * struct strprt - Argument type and string to print
- *
- * @specifier: Type of argument
- * @f: Function associated
- */
-typedef struct strprt
-{
-	char *specifier;
-	int (*f)(va_list args);
-} strprt_t;
-
 #endif

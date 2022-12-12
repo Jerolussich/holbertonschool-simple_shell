@@ -131,7 +131,7 @@ int execute(char **token_array, char *buffer, int count, int status)
 			fork_handler(token_array, buffer);
 		if (check == -1)
 		{
-			fprintf(stderr,"hsh: %i: %s: not found\n", count, token_array[0]);
+			fprintf(stderr, "hsh: %i: %s: not found\n", count, token_array[0]);
 			free_grid(token_array);
 			status = 127;
 			return (status);
